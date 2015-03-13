@@ -145,7 +145,7 @@ function drawGraph(){
 						.style("left", xPosition + "px")
 						.style("top", yPosition + "px")						
 						.select("#value")
-						.text("Gene: "+d[3]+"\nGO_Term: "+d[2]+"\nLocus: "+d[4]);
+						.text("Gene: "+d[3]+"</br>GO_Term: "+d[2]+"\nLocus: "+d[4]);
 			   
 					//Show the tooltip
 					d3.select("#tooltip").classed("hidden", false);
@@ -172,9 +172,9 @@ function drawGraph(){
 
 		//Create yAxis label
         svg.append("text")
-	        .attr("transform", "rotate(-90)")
-	        .attr('x',200)
-	        .attr('y',50)
+	        // .attr("transform", "rotate(-90)")
+	        .attr('x',100)
+	        .attr('y',100)
 	        .attr("dy", "-3em")
 	        .style("font-size", "20px")
 	        .style("text-anchor", "middle") 
