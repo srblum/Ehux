@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script type= "text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+        <script type="text/javascript" src="geneView.js"></script>
+        <link rel="stylesheet" type="text/css" href="geneView.css">
+	</head>
+	<body>
+		<div id="tooltip" class="hidden">
+			<p><strong></strong></p>
+			<p><span id="value">100</span>%</p>
+		</div>
+		<FORM>
+	        <select id="condition1" size="7">
+	        	<option class="condition1" value="Constant CO2 Low pH">ConstantCO2LowpH</option>
+	            <option class="condition2" value="Constant CO2 High pH">ConstantCO2HighpH</option>
+	            <option class="condition3" value="pH7 Low CO2">pH7LowCO2</option>
+	            <option class="condition4" value="pH7 Mid CO2">pH7MidCO2</option>
+	            <option class="condition5" value="pH7 High CO2">pH7HighCO2</option>
+	            <option class="condition6" value="pH8 Low CO2">pH8LowCO2</option>
+	            <option class="condition7" value="pH8 Mid CO2">pH8MidCO2</option>
+	        </select>
+	       	<select id="condition2" size="7">
+	        	<option class="condition8" value="Constant CO2 LowpH">ConstantCO2LowpH</option>
+	            <option class="condition9" value="Constant CO2 HighpH">ConstantCO2HighpH</option>
+	            <option class="condition10" value="pH7 Low CO2">pH7LowCO2</option>
+	            <option class="condition11" value="pH7 Mid CO2">pH7MidCO2</option>
+	            <option class="condition12" value="pH7 High CO2">pH7HighCO2</option>
+	            <option class="condition13" value="pH8 Low CO2">pH8LowCO2</option>
+	            <option class="condition14" value="pH8 Mid CO2">pH8MidCO2</option>
+	        </select>
+	        <INPUT TYPE="button" Value="Plot" onClick="drawGraph(this.form)">
+		</FORM>
+	</body>
+</html>
