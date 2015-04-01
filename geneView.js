@@ -1,9 +1,9 @@
-var condition1='c1'
-	condition2='c2'
-	condition1text='Constant CO2 LowpH'
-	condition2text='Constant CO2 HighpH';
-
-var w = 1000;
+var condition1='c3'
+	condition2='c5'
+	condition1text='pH7 Low CO2'
+	condition2text='pH7 High CO2';
+//w and h are the height and width of the graph, NOT of the svg element, which is w(or h)+2*padding
+var w = 600;
 	var h = 600;
 	var padding = 100;
 
@@ -95,11 +95,11 @@ function drawGraph(){
 		//Create scale functions
 		var xScale = d3.scale.linear()
 							 .domain([0, d3.max(dataset, function(d) { return d[0]; })])
-							 .range([padding, w - padding * 2]);
+							 .range([padding, w + padding]);
 
 		var yScale = d3.scale.linear()
 							 .domain([0, d3.max(dataset, function(d) { return d[1]; })])
-							 .range([h - padding, padding]);
+							 .range([h + padding, padding]);
 
 
 
@@ -119,21 +119,42 @@ function drawGraph(){
 		d3.selectAll('svg').remove();
 		var svg = d3.select("body")
 					.append("svg")
-					.attr("width", w)
-					.attr("height", h);
+					.attr("width", w+padding*2)
+					.attr("height", h+padding*2);
 
+		//Define genes of interest
+		var CO2Arr=['CA1','EMIHUDRAFT_469462','EMIHUDRAFT_436031','EMIHUDRAFT_200137','ATPVC3','EMIHUDRAFT_67081','EMIHUDRAFT_70025','CAX3','NHA2','EMIHUDRAFT_457739','GPA']
+		var nonCO2Arr=['EMIHUDRAFT_456048','Gamma_CA_1','HVCN1','EMIHUDRAFT_75635']
 		//Create circles
 		svg.selectAll("circle")
 		   .data(dataset)
 		   .enter()
 		   .append("circle")
+		   .each(function(d){
+		  		if($.inArray(d[3],CO2Arr)!=-1){
+		  			d3.select(this).attr({
+		  				fill:'green',
+		  				r:3
+		  			});
+		  		}else if($.inArray(d[3],nonCO2Arr)!=-1){
+		  			d3.select(this).attr({
+		  				fill:'red',
+		  				r:3
+		  			});
+		  		}else{
+		  			d3.select(this).attr({
+		  				fill:'black',
+		  				'fill-opacity':0.3,
+		  				r:2
+		  			});
+		  		}
+		   })
 		   .attr("cx", function(d) {
 		   		return xScale(d[0]);
 		   })
 		   .attr("cy", function(d) {
 		   		return yScale(d[1]);
 		   })
-		   .attr("r", 2)
 		   .on("mouseover", function(d) {
 
 					//Get this bar's x/y values, then augment for the tooltip
@@ -145,7 +166,7 @@ function drawGraph(){
 						.style("left", xPosition + "px")
 						.style("top", yPosition + "px")						
 						.select("#value")
-						.text("Gene: "+d[3]+"</br>GO_Term: "+d[2]+"\nLocus: "+d[4]);
+						.text("Gene: "+d[3]+" \nGO_Term: "+d[2]+"\nLocus: "+d[4]);
 			   
 					//Show the tooltip
 					d3.select("#tooltip").classed("hidden", false);
@@ -161,7 +182,7 @@ function drawGraph(){
 		//Create X axis
 		svg.append("g")
 			.attr("class", "x axis")
-			.attr("transform", "translate(0," + (h - padding) + ")")
+			.attr("transform", "translate(0," + (h + padding) + ")")
 			.call(xAxis);
 
 		//Create Y axis
@@ -172,9 +193,9 @@ function drawGraph(){
 
 		//Create yAxis label
         svg.append("text")
-	        // .attr("transform", "rotate(-90)")
-	        .attr('x',100)
-	        .attr('y',100)
+	        .attr("transform", "rotate(-90,"+(padding)+","+(padding + h/2)+")")
+	        .attr('x',(padding))
+	        .attr('y',(padding + h/2))
 	        .attr("dy", "-3em")
 	        .style("font-size", "20px")
 	        .style("text-anchor", "middle") 
@@ -183,7 +204,7 @@ function drawGraph(){
 
 	    // Creates xAxis label
 	    svg.append("text")
-	        .attr("transform", "translate(" + w/2 + " ," + (h - 50) + ")")
+	        .attr("transform", "translate(" + (padding +w/2) + " ," + (h + 1.5*padding) + ")")
 	        .style("text-anchor", "middle")
 	        .style("font-size", "20px")
 	        .text(condition1text);

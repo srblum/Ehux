@@ -29,3 +29,13 @@
 	font-size: 16px;
 	line-height: 20px;
 }
+
+.CO2Responsive{
+	fill:green;
+	r:5;
+}
+
+.CO2Unresponsive{
+	fill:red;
+	r:5;
+}
