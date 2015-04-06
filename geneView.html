@@ -13,6 +13,7 @@
 		</div>
 		<FORM>
 	        <select id="condition1" size="7">
+	        	<option selected disabled>Choose X Axis Variable</option>
 	        	<option class="condition1" value="Constant CO2 Low pH">ConstantCO2LowpH</option>
 	            <option class="condition2" value="Constant CO2 High pH">ConstantCO2HighpH</option>
 	            <option class="condition3" value="pH7 Low CO2">pH7LowCO2</option>
@@ -22,6 +23,7 @@
 	            <option class="condition7" value="pH8 Mid CO2">pH8MidCO2</option>
 	        </select>
 	       	<select id="condition2" size="7">
+	       		<option selected disabled>Choose Y Axis Variable</option>
 	        	<option class="condition8" value="Constant CO2 LowpH">ConstantCO2LowpH</option>
 	            <option class="condition9" value="Constant CO2 HighpH">ConstantCO2HighpH</option>
 	            <option class="condition10" value="pH7 Low CO2">pH7LowCO2</option>
@@ -30,7 +32,11 @@
 	            <option class="condition13" value="pH8 Low CO2">pH8LowCO2</option>
 	            <option class="condition14" value="pH8 Mid CO2">pH8MidCO2</option>
 	        </select>
-	        <INPUT TYPE="button" Value="Plot" onClick="drawGraph(this.form)">
+<!-- 	        <select id="dataset" size="2">
+	        	<option class="rawDataset">Raw FPKM</option>
+	        	<option class="logDataset">Log FPKM</option>
+	       	</select> -->
+	        <INPUT TYPE="button" Value="Plot" onClick="redrawGraph(this.form)">
 		</FORM>
 	</body>
 </html>
