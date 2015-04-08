@@ -12,6 +12,7 @@ var w = 500
 //logDataset contains log(FPKM+0.1)  (log base 10)
 var	rawDataset=[]
 	logDataset=[]
+	blastDataset={}
 	dataset=logDataset;
 
 
@@ -39,13 +40,13 @@ window.onload = function() {
 	        d.Gene=d.Gene;
 	        d.Locus=d.Locus;
 	        d.Test_ID=d.Test_ID;
-	        d.c0=+d.ConstantCO2_LowpH
-	        d.c1=+d.ConstantCO2_HighpH
-	        d.c2=+d.pH7_LowCO2_2
-	        d.c3=+d.pH7_MidCO2
-	        d.c4=+d.pH7_HighCO2
-	        d.c5=+d.pH8_LowCO2
-	        d.c6=+d.pH8_MidCO2
+	        d.c0=+d.ConstantCO2_LowpH;
+	        d.c1=+d.ConstantCO2_HighpH;
+	        d.c2=+d.pH7_LowCO2_2;
+	        d.c3=+d.pH7_MidCO2;
+	        d.c4=+d.pH7_HighCO2;
+	        d.c5=+d.pH8_LowCO2;
+	        d.c6=+d.pH8_MidCO2;
 
 	        //Add to dataset only the values of the conditions selected
 	        rawDataset[rawDataset.length]=[d.c0,d.c1,d.c2,d.c3,d.c4,d.c5,d.c6,d.GO_Term,d.Gene,d.Locus,d.Test_ID]
@@ -57,18 +58,28 @@ window.onload = function() {
 	        d.Gene=d.Gene;
 	        d.Locus=d.Locus;
 	        d.Test_ID=d.Test_ID;
-	        d.c0=+d.ConstantCO2_LowpH
-	        d.c1=+d.ConstantCO2_HighpH
-	        d.c2=+d.pH7_LowCO2_2
-	        d.c3=+d.pH7_MidCO2
-	        d.c4=+d.pH7_HighCO2
-	        d.c5=+d.pH8_LowCO2
-	        d.c6=+d.pH8_MidCO2
+	        d.c0=+d.ConstantCO2_LowpH;
+	        d.c1=+d.ConstantCO2_HighpH;
+	        d.c2=+d.pH7_LowCO2_2;
+	        d.c3=+d.pH7_MidCO2;
+	        d.c4=+d.pH7_HighCO2;
+	        d.c5=+d.pH8_LowCO2;
+	        d.c6=+d.pH8_MidCO2;
 
 	        //Add to dataset only the values of the conditions selected
 	        logDataset[logDataset.length]=[d.c0,d.c1,d.c2,d.c3,d.c4,d.c5,d.c6,d.GO_Term,d.Gene,d.Locus,d.Test_ID]
 	    });
 	    drawGraph();
+	});
+
+	d3.tsv("pH7LowCO2_pH7HighCO2_DEGenes_lenLimit_nonEHux_nonPredicted_discBLAST.tsv",function(data){
+		data.forEach(function(d){
+			d.Test_ID=d.Test_ID;
+			d.Hit=d.Hit;
+
+			//There are a maximum of 10 blast hits, ampersand-delimited
+			blastDataset[d.Test_ID]=d.Hit.split('&')
+		});
 	});
 }
 
@@ -207,28 +218,36 @@ function drawGraph(){
 	   })
 	   .on("mouseover", function(d) {
 
-				//Get this bar's x/y values, then augment for the tooltip
-				var xPosition = parseFloat(d3.select(this).attr("cx"));
-				var yPosition = parseFloat(d3.select(this).attr("cy"));
+			//Get this bar's x/y values, then augment for the tooltip
+			var xPosition = parseFloat(d3.select(this).attr("cx"));
+			var yPosition = parseFloat(d3.select(this).attr("cy"));
 
-				//Update the tooltip position and value
-				d3.select("#tooltip")
-					.style("left", xPosition +10+ "px")
-					.style("top", yPosition + "px")						
-					.select("#value")
-					.html("<b>Test ID: </b>"+d[10]+
-						"</br><b>Gene</b>: "+d[8]+" </br><b>GO_Term</b>: "+d[7]+
-						"</br></br><b>Raw FPKM Values</b>"+
-						"</br><b>ConstantCO2_LowpH: </b>"+(Math.pow(2,d[0])-2).toFixed(2)+
-						"</br><b>ConstantCO2_HighpH: </b>"+(Math.pow(2,d[1])-2).toFixed(2)+
-						"</br><b>pH7_LowCO2: </b>"+(Math.pow(2,d[2])-2).toFixed(2)+
-	   					"</br><b>pH7_MidCO2: </b>"+(Math.pow(2,d[3])-2).toFixed(2)+
-						"</br><b>pH7_HighCO2: </b>"+(Math.pow(2,d[4])-2).toFixed(2)+
-						"</br><b>pH8_LowCO2: </b>"+(Math.pow(2,d[5])-2).toFixed(2)+
-						"</br><b>pH8_MidCO2: </b>"+(Math.pow(2,d[6])-2).toFixed(2));
+			var text="<b>Test ID: </b>"+d[10]+
+					"</br><b>Gene</b>: "+d[8]+" </br><b>GO_Term</b>: "+d[7]+
+					"</br></br><b>Raw FPKM Values</b>"+
+					"</br><b>ConstantCO2_LowpH: </b>"+(Math.pow(2,d[0])-2).toFixed(2)+
+					"</br><b>ConstantCO2_HighpH: </b>"+(Math.pow(2,d[1])-2).toFixed(2)+
+					"</br><b>pH7_LowCO2: </b>"+(Math.pow(2,d[2])-2).toFixed(2)+
+   					"</br><b>pH7_MidCO2: </b>"+(Math.pow(2,d[3])-2).toFixed(2)+
+					"</br><b>pH7_HighCO2: </b>"+(Math.pow(2,d[4])-2).toFixed(2)+
+					"</br><b>pH8_LowCO2: </b>"+(Math.pow(2,d[5])-2).toFixed(2)+
+					"</br><b>pH8_MidCO2: </b>"+(Math.pow(2,d[6])-2).toFixed(2);
+			if(d[d.length-1] in blastDataset){
+				text+="</br><b>BLAST hits</b>";
+				var hitList=blastDataset[d[d.length-1]];
+				console.log(hitList);
+				for(var i=0;i<hitList.length;i++)
+					text+=hitList[i]+"<br><br>";
+			}
+			//Update the tooltip position and value
+			d3.select("#tooltip")
+				.style("left", (xPosition +10)+ "px")
+				.style("top", (yPosition -200)+ "px")						
+				.select("#value")
+				.html(text);
 
-				//Show the tooltip
-				d3.select("#tooltip").classed("hidden", false);
+			//Show the tooltip
+			d3.select("#tooltip").classed("hidden", false);
 
 		   })
 	   .on("mouseout", function() {
@@ -311,6 +330,7 @@ function redrawGraph(){
 						 .domain([0, d3.max(dataset, function(d) { return d[condition2]; })])
 						 .range([h + padding, padding]);
 	d3.selectAll('.axisText').remove();
+
 	// Creates yAxis label
 	d3.select('svg').append("text")
 		.attr('class','axisText')
