@@ -72,7 +72,25 @@ window.onload = function() {
 	    drawGraph();
 	});
 
-	d3.tsv("pH7LowCO2_pH7HighCO2_DEGenes_lenLimit_nonEHux_nonPredicted_discBLAST.tsv",function(data){
+	d3.tsv("lowCO2_DEGenes_lenLimit_nonEHux_nonPredicted_discBLAST.tsv",function(data){
+		data.forEach(function(d){
+			d.Test_ID=d.Test_ID;
+			d.Hit=d.Hit;
+
+			//There are a maximum of 10 blast hits, ampersand-delimited
+			blastDataset[d.Test_ID]=d.Hit.split('&')
+		});
+	});
+	d3.tsv("lowpH_DEGenes_lenLimit_nonEHux_nonPredicted_discBLAST.tsv",function(data){
+		data.forEach(function(d){
+			d.Test_ID=d.Test_ID;
+			d.Hit=d.Hit;
+
+			//There are a maximum of 10 blast hits, ampersand-delimited
+			blastDataset[d.Test_ID]=d.Hit.split('&')
+		});
+	});
+	d3.tsv("highpH_DEGenes_lenLimit_nonEHux_nonPredicted_discBLAST.tsv",function(data){
 		data.forEach(function(d){
 			d.Test_ID=d.Test_ID;
 			d.Hit=d.Hit;
@@ -235,8 +253,7 @@ function drawGraph(){
 			if(d[d.length-1] in blastDataset){
 				text+="</br><b>BLAST hits</b>";
 				var hitList=blastDataset[d[d.length-1]];
-				console.log(hitList);
-				for(var i=0;i<hitList.length;i++)
+				for(var i=0;i<hitList.length && i<5;i++)
 					text+=hitList[i]+"<br><br>";
 			}
 			//Update the tooltip position and value
