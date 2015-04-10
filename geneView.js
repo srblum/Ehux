@@ -259,7 +259,7 @@ function drawGraph(){
 			//Update the tooltip position and value
 			d3.select("#tooltip")
 				.style("left", (xPosition +10)+ "px")
-				.style("top", (yPosition -200)+ "px")						
+				.style("top", (yPosition -100)+ "px")						
 				.select("#value")
 				.html(text);
 
