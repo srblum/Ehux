@@ -2,6 +2,7 @@ var condition1=2
 	condition2=4
 	condition1text='pH7 Low CO2'
 	condition2text='pH7 High CO2';
+	
 //w and h are the height and width of the graph, NOT of the svg element, which is w(or h)+2*padding
 var w = 500
 	h = 500
